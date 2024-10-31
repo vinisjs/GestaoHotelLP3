@@ -1,4 +1,5 @@
-public class Cliente {
+package model;
+public class ModelCliente {
     private String nome;
     private long cpf;
     private String email;
