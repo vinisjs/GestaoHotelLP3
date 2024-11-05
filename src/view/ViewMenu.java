@@ -1,5 +1,8 @@
 package view;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import controller.ControllerClient;
@@ -7,28 +10,36 @@ import model.ModelCliente;
 
 public class ViewMenu {
     public void main() {
-        // Cadastro de clientes - Nome - CPF - E-mail - Telefone
-        // Cadastro de quartos - Número do quarto - Tipo do quarto (ex: simples, duplo,
-        // suíte) - Preço por noite - Status (disponível, reservado, em manutenção)
-        // Reservas de quartos - Cliente que fez a reserva - Data de entrada - Data de
-        // saída - Quarto reservado
+        List<ModelCliente> listClients = new ArrayList<ModelCliente>();
+
         ModelCliente cliente = new ModelCliente();
         ViewCliente clienteView = new ViewCliente();
         ControllerClient controllerClient = new ControllerClient();
-        String menu = "1 - Para Cadastrar Clientes\n2 - Para listar todos os clientes cadastrados\n0 - Para Sair";
+        String menu = "Sistema de Gestão de Clientes\n" + "Opções:\n" + "1 - Cadastrar Cliente\n"
+                + "2 - Listar Clientes\n"
+                + "0 - Sair";
         int opcao = 0;
         do {
             opcao = Integer.parseInt(JOptionPane.showInputDialog(null, menu));
             switch (opcao) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Saindo do Sistema");
+                    break;
                 case 1:
                     cliente = clienteView.setInformationClient();
-                    String RetornControllerClient =  controllerClient.SaveClient(cliente);
-                    JOptionPane.showMessageDialog(null, RetornControllerClient);
+                    ModelCliente RetornControllerClient = controllerClient.SaveClient(cliente);
+                    listClients.add(RetornControllerClient);
+                    JOptionPane.showMessageDialog(null,
+                            "Cliente " + RetornControllerClient.getNome() + " Cadastrado com Sucesso!");
                     break;
                 case 2:
+                    for (ModelCliente client : listClients) {
+                        JOptionPane.showMessageDialog(null, "Nome: " + client.getNome() + "\nCPF: " + client.getCpf()
+                                + "\nEmail: " + client.getEmail() + "\nTelefone: " + client.getTelefone());
+                    }
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Opção incorreta");
+                    JOptionPane.showMessageDialog(null, "Opção Inválida");
             }
         } while (opcao != 0);
     }

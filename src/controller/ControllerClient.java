@@ -7,14 +7,14 @@ import repository.RepositoryClient;
 
 public class ControllerClient {
     RepositoryClient repoClient = new RepositoryClient();
-    
-    public String SaveClient(ModelCliente cliente) {
+
+    public ModelCliente SaveClient(ModelCliente cliente) {
         if (!cliente.getNome().isEmpty() && cliente.getNome() != "") {
-            String returnRepo = repoClient.RepoSaveClient(cliente);
+            ModelCliente returnRepo = repoClient.RepoSaveClient(cliente);
             return returnRepo;
         } else {
             JOptionPane.showMessageDialog(null, "O nome do cliente é obrigatório!");
-            return "O nome é Obrigatório";
+            return null;
         }
     }
 }
